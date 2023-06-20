@@ -1,20 +1,22 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { useFonts } from 'expo-font'
+import { NativeBaseProvider, Box } from 'native-base'
+
+import Main from './screen/Main'
+import Loading from './components/Loading'
+import Poppins from './assets/fonts/poppins.ttf'
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [loaded] = useFonts({ Poppins })
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  return (
+    <NativeBaseProvider>
+      {loaded ? (
+        <Box flex={1} bg="#fff" alignItems="center" justifyContent="center">
+          <Main />
+        </Box>
+      ) : (
+        <Loading />
+      )}
+    </NativeBaseProvider>
+  )
+}
